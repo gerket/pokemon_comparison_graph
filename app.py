@@ -11,7 +11,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 
-############# Make changes here
+############# Don't change anything above
 
 
 
@@ -57,7 +57,7 @@ app.layout = html.Div([
         ]),
         html.Div([
             # Little bit smaller header
-            html.H2('Comparison Graphs:'),
+            html.H2('Comparison Graph:'),
             # Graph placement
             dcc .Graph(
                 id='graph_fig',
@@ -119,7 +119,7 @@ def update_graph(input_pokemon_choices):
 
 
 
-###### Don't change anything here
+###### Don't change anything below
 
 if __name__ == '__main__':
     app.run_server()
