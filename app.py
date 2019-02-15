@@ -11,7 +11,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 
-############# Don't change anything above
+############# Make changes here
 
 
 
@@ -60,14 +60,14 @@ app.layout = html.Div([
             html.H2('Comparison Graph:'),
             # Graph placement
             dcc .Graph(
-                id='graph_fig',
+                id='base_stat_bar_graph',
                 )
         ])
     ]
 )
 
 @app.callback(
-    dash.dependencies.Output('graph_fig', 'figure'),
+    dash.dependencies.Output('base_stat_bar_graph', 'figure'),
     [dash.dependencies.Input('pokemon_choices','value')])
 def update_graph(input_pokemon_choices):
     if type(input_pokemon_choices)==str:
@@ -77,8 +77,8 @@ def update_graph(input_pokemon_choices):
 
     #api calls to get the relevent info for each pokemon
     for poke_name in input_pokemon_choices:
-        temp_results = requests.get(name_url[poke_name])
-        temp_results = temp_results.json()
+        temp_request = requests.get(name_url[poke_name])
+        temp_results = temp_request.json()
 
         temp_poke_df = pd.DataFrame(temp_results['stats'])
         temp_poke_df['stat_name'] = [x['name'].capitalize() for x in temp_poke_df['stat']]
@@ -106,7 +106,7 @@ def update_graph(input_pokemon_choices):
             'x':list(pd_pokedex['Name']),
             'y':list(pd_pokedex[col]),
             'name':col
-        }) for col in [x for x in pd_pokedex.columns if x != 'Name']
+        }) for col in pd_pokedex.columns if col != 'Name'
     ]
 
     layout = {
@@ -119,7 +119,7 @@ def update_graph(input_pokemon_choices):
 
 
 
-###### Don't change anything below
+###### Don't change anything here
 
 if __name__ == '__main__':
     app.run_server()
